@@ -26,7 +26,6 @@ app.use('/register', registerLoginMiddleware);
 app.use('/login', registerLoginMiddleware);
 
 app.use('/register', routeRegister);
-
 app.use('/login', routeLogin);
 
 app.use('/', authMiddleware);

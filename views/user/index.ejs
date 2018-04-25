@@ -1,0 +1,36 @@
+<%- include ../partial/header.ejs%>
+
+  <div class="container mt-5">
+    <a href="/users/<%= items[0].UserId %>/items/add" class="btn btn-primary">Add Item</a>
+    <div class="table-responsive-sm">
+      <table class="table mt-2">
+        <thead class="thead bg-info text-white">
+          <tr>
+            <th>No</th>
+            <th>Items</th>
+            <th>Price</th>
+            <th>Percentage</th>
+            <th>Foundation</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% items.forEach((item, i) => { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td> <%= item.name %> </td>
+              <td> <%= item.price %> </td>
+              <td> <%= item.percentage %> %</td>
+              <td> <%= item.Foundation.foundation_name %> </td>
+              <td>
+                <a href='/users/<%= items[0].UserId %>/items/edit/<%= item.itemCode %>'>Edit</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<%- include ../partial/footer.ejs%>
