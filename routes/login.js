@@ -2,11 +2,11 @@ const router               = require('express').Router();
 const { User, Foundation } = require('../models');
 const bcrypt               = require('bcrypt');
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.render('login');
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', (req, res) => {
   if (req.body.login === 'user') {
     User
       .findOne({

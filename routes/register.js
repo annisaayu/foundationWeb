@@ -1,11 +1,11 @@
 const router               = require('express').Router();
 const { User, Foundation } = require('../models');
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.render('register');
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', (req, res) => {
   if (req.body.register === 'user') {
     User
       .create({

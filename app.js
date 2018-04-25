@@ -7,7 +7,7 @@ const routeIndex              = require('./routes');
 const routeRegister           = require('./routes/register');
 const routeLogin              = require('./routes/login');
 const routeLogout             = require('./routes/logout');
-
+const routeUser               = require('./routes/user');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -26,11 +26,14 @@ app.use('/register', registerLoginMiddleware);
 app.use('/login', registerLoginMiddleware);
 
 app.use('/register', routeRegister);
+
 app.use('/login', routeLogin);
 
 app.use('/', authMiddleware);
 
 app.use('/', routeIndex);
+
+app.use('/users', routeUser);
 
 app.use('/logout', routeLogout);
 
