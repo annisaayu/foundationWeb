@@ -1,10 +1,7 @@
-const routes = require('express').Router();
-const user = require('./user.js');
+const router = require('express').Router();
 
-routes.get('/', (req, res) => {
-  res.render('home')
+router.get('/', (req, res, next) => {
+  res.render('index');
 })
 
-routes.use('/users', user)
-
-module.exports = routes
+module.exports = router;
