@@ -1,7 +1,7 @@
 <%- include ../partial/header.ejs%>
 
   <div class="container mt-5">
-    <form action="/users/<%= item.UserId %>/edit-item/<%= item.itemCode %>" method="POST">
+    <form action="/users/<%= item.UserId %>/items/edit/<%= item.itemCode %>" method="POST">
       <div class="form-group col-md-6">
         <label >Item Name :</label>
         <input type="text" class="form-control" name="name" value="<%= item.name %>" > <br/>
@@ -27,7 +27,7 @@
         <select name="FoundationId" class="custom-select">
           <option value='' > --- select Foundation --- </option>
           <% foundations.forEach(function(foundation) {%>
-             <option value= '<%= foundation.id %>' selectedForm(foundation, item.FoundationId) > <%= foundation.foundation_name %> </option>
+             <option value= '<%= foundation.id %>' <%= selectedForm(foundation, item.FoundationId) %> > <%= foundation.foundation_name %> </option>
           <% }) %>
         </select>
       </div>

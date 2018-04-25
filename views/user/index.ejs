@@ -1,7 +1,7 @@
 <%- include ../partial/header.ejs%>
 
   <div class="container mt-5">
-    <a href="/users/<%= items[0].UserId %>/add-item" class="btn btn-primary">Add Item</a>
+    <a href="/users/<%= items[0].UserId %>/items/add" class="btn btn-primary">Add Item</a>
     <div class="table-responsive-sm">
       <table class="table mt-2">
         <thead class="thead bg-info text-white">
@@ -24,7 +24,7 @@
               <td> <%= item.percentage %> %</td>
               <td> <%= item.Foundation.foundation_name %> </td>
               <td>
-                <a href='/users/<%= items[0].UserId %>/edit-item/<%= item.itemCode %>'>Edit</a>
+                <a href='/users/<%= items[0].UserId %>/items/edit/<%= item.itemCode %>'>Edit</a>
               </td>
             </tr>
           <% }) %>

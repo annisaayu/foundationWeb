@@ -10,7 +10,6 @@ user.get('/', (req, res) => {
       where: {UserId: 1}
     })
     .then( items => {
-      // res.send(items)
       res.render('user/index', {items})
     })
     .catch(({errors}) => {
@@ -18,7 +17,35 @@ user.get('/', (req, res) => {
     })
 })
 
-user.get('/:userid/add-item', ( req, res)=> {
+user.get('/:userid/profile', (req, res) => {
+  User
+    .findById(req.params.userid)
+    .then(user => {
+      // res.send(user)
+      res.render('user/profile', {user})
+    })
+    .catch(({errors}) => {
+      res.send(errors)
+    })
+})
+
+user.post('/:userid/profile', (req, res) => {
+  User
+    .findById(req.params.userid)
+    .then(user => {
+      user
+        .update(req.body, {where: {id: req.params.id}})
+        .then((profile) => {
+          res.redirect('/users')
+        })
+    })
+    .catch(({errors}) => {
+      res.send(errors)
+    })
+})
+
+// === item action ===
+user.get('/:userid/items/add', ( req, res)=> {
   Foundation
     .findAll()
     .then( foundations => {
@@ -29,7 +56,7 @@ user.get('/:userid/add-item', ( req, res)=> {
     })
 })
 
-user.post('/:userid/add-item', ( req, res) => {
+user.post('/:userid/items/add', ( req, res) => {
   req.body.UserId = req.params.userid;
   req.body.status = 'available';
   Item
@@ -43,7 +70,7 @@ user.post('/:userid/add-item', ( req, res) => {
     })
 })
 
-user.get('/:UserId/edit-item/:id', (req, res) => {
+user.get('/:UserId/items/edit/:id', (req, res) => {
   Item
     .findOne({
       where: {itemCode: req.params.id}
@@ -64,17 +91,18 @@ user.get('/:UserId/edit-item/:id', (req, res) => {
     })
 })
 
-user.post('/:UserId/edit-item/:id', (req, res) => {
+user.post('/:UserId/items/edit/:id', (req, res) => {
   Item
-    .findOne({
-      where: {itemCode: req.params.id}
-    })
-    .then(item => {
-      item
-        .update(req.body)
-        .then(updatedItem => {
-          res.redirect('/users')
-        })
+    .update({
+      name: req.body.name,
+      photo: req.body.photo,
+      price: req.body.price,
+      percentage: req.body.percentage,
+      FoundationId: 2
+    }, {where: {id: req.params.id}})
+    .then(updatedItem => {
+      // res.send(updatedItem)
+      res.redirect('/users')
     })
     .catch(({errors}) => {
       res.send(errors)
