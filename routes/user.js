@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
           }
         })
         .then( items => {
-          res.render('users/index', { items, user })
+          res.render('users/index', { items, user, level: req.session.level  })
         })
     })
 
@@ -28,7 +28,7 @@ router.get('/profile', (req, res) => {
   User
     .findById(req.session.user_id)
     .then(user => {
-      res.render('users/profile', { user })
+      res.render('users/profile', { user, level: req.session.level  })
     })
     .catch(({ errors }) => {
       res.send(errors)
@@ -77,7 +77,7 @@ router.get('/items', (req, res) => {
           }
         })
         .then(user => {
-          res.render('users/index', { items, user })
+          res.render('users/index', { items, user, level: req.session.level })
         })
     })
     .catch(({errors}) => {
@@ -96,7 +96,7 @@ router.get('/items/add', ( req, res)=> {
           }
         })
         .then(user => {
-          res.render('items/add', { foundations, user })
+          res.render('items/add', { foundations, user, level: req.session.level })
         })
     })
     .catch(({ errors })=> {
@@ -140,7 +140,7 @@ router.get('/items/edit/:id', (req, res) => {
               }
             })
             .then(user => {
-              res.render('items/edit',{ item, foundations, user })
+              res.render('items/edit',{ item, foundations, user, level: req.session.level  })
             })
         })
     })
