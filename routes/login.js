@@ -53,10 +53,10 @@ router.post('/', (req, res) => {
 
             res.redirect('/foundation');
           } else {
-            res.redirect('/login')
+            res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });
           }
         } else {
-          res.redirect('/login');
+          res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });;
         }
       })
       .catch(({ errors }) => {
