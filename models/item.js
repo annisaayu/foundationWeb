@@ -17,5 +17,34 @@ module.exports = (sequelize, DataTypes) => {
     Item.belongsTo(models.Foundation)
     Item.belongsTo(models.User)
   };
+
+  Item.hook('afterUpdate', (item, options) => {
+    if (item.status === 'sold') {
+      let saldoFoundation = (item.price * item.percentage) / 100;
+      let saldoUser       = item.price - saldoFoundation;
+
+      sequelize.models.User
+        .update({
+          saldo: saldoUser
+        }, {
+          where: {
+            id: item.UserId
+          }
+        })
+        .then(data => {
+          sequelize.models.Foundation
+            .update({
+              saldo: saldoFoundation
+            }, {
+              where: {
+                id: item.FoundationId
+              }
+            })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  })
   return Item;
 };
