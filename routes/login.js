@@ -21,6 +21,7 @@ router.post('/', (req, res) => {
           if (password) {
             req.session.user_id = user.id;
             req.session.email   = user.email;
+            req.session.name    = user.name
             req.session.level   = 'user';
 
             res.redirect('/user');
@@ -49,6 +50,7 @@ router.post('/', (req, res) => {
           if (password) {
             req.session.foundation_id = foundation.id;
             req.session.email         = foundation.email;
+            req.session.name          = foundation.foundation_name
             req.session.level         = 'foundation';
 
             res.redirect('/foundation');

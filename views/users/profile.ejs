@@ -12,24 +12,23 @@
                 <h3 class="panel-title">Profile</h3>
               </div>
               <div class="panel-body">
+
+                <%- include('../partials/error-message.ejs') %>
+
                 <form action="/user/profile" method="POST">
 
-                  <div>
+                  <div class="form-group col-md-6">
                     <label for="fname">Name :</label>
                     <input type="text" id="fname" class="form-control" name="name" value="<%= user.name %>"> <br/>
-                  </div>
 
-                  <div>
                     <label for="lname">Email :</label>
                     <input type="text" id="lname" class="form-control" name="email" value="<%= user.email %>"> <br/>
-                  </div>
 
-                  <div>
                     <label for="email">Saldo :</label>
                     <input type="text" disabled  id="email" class="form-control" name="saldo" value="<%= user.saldo %>" > <br/>
-                  </div>
 
-                  <input type="submit" class="btn btn-primary" value="Submit">
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                  </div>
                 </form>
               </div>
             </div>

@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "ihsan",
-    "password": "12345",
-    "database": "Foundation_dev",
+    "username": "postgres",
+    "password": "w12",
+    "database": "donate_dev",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
