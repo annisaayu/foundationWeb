@@ -1,0 +1,25 @@
+<%- include ../partials/header.ejs%>
+
+    <div class="container">
+      <form action="/foundation/profile" method="POST">
+
+        <div>
+          <label for="fname">Name :</label>
+          <input type="text" id="fname" class="form-control" name="foundation_name" value="<%= foundation.foundation_name %>"> <br/>
+        </div>
+
+        <div>
+          <label for="lname">Email :</label>
+          <input type="text" id="lname" class="form-control" name="email" value="<%= foundation.email %>"> <br/>
+        </div>
+
+        <div>
+          <label for="email">Saldo :</label>
+          <input type="text" disabled  id="email" class="form-control" name="saldo" value="<%= foundation.saldo %>" > <br/>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Submit">
+      </form>
+    </div>
+
+<%- include ../partials/footer.ejs%>

@@ -1,25 +1,25 @@
-<%- include ../partial/header.ejs%>
+<%- include ../partials/header.ejs%>
 
   <div class="container mt-5">
-    <form action="/users/<%= item.UserId %>/items/edit/<%= item.itemCode %>" method="POST">
+    <form action="/user/items/add" method="POST">
       <div class="form-group col-md-6">
         <label >Item Name :</label>
-        <input type="text" class="form-control" name="name" value="<%= item.name %>" > <br/>
+        <input type="text" class="form-control" name="name"> <br/>
       </div>
 
       <div class="form-group col-md-6">
         <label>Price :</label>
-        <input type="number" class="form-control" name="price" value="<%= item.price %>"> <br/>
+        <input type="number" class="form-control" name="price"> <br/>
       </div>
 
       <div class="form-group col-md-6">
         <label>Percentage (%) :</label>
-        <input type="number" class="form-control" name="percentage" value="<%= item.percentage %>"> <br/>
+        <input type="number" class="form-control" name="percentage"> <br/>
       </div>
 
       <div class="form-group col-md-6">
         <label>Item Photo : </label><br />
-        <input type="file"  name="photo" value="<%= item.photo %>"> <br/>
+        <input type="file"  name="photo"> <br/>
       </div>
 
       <div class="form-group col-md-6">
@@ -27,7 +27,7 @@
         <select name="FoundationId" class="custom-select">
           <option value='' > --- select Foundation --- </option>
           <% foundations.forEach(function(foundation) {%>
-             <option value= '<%= foundation.id %>' <%= selectedForm(foundation, item.FoundationId) %> > <%= foundation.foundation_name %> </option>
+             <option value= '<%= foundation.id %>' > <%= foundation.foundation_name %> </option>
           <% }) %>
         </select>
       </div>
@@ -36,4 +36,4 @@
     </form>
   </div>
 
-<%- include ../partial/footer.ejs%>
+<%- include ../partials/footer.ejs%>

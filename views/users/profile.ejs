@@ -1,7 +1,7 @@
 <%- include ../partials/header.ejs%>
 
-    <div class="container mt-5">
-      <form action="/users/profile" method="POST">
+    <div class="container">
+      <form action="/user/profile" method="POST">
 
         <div>
           <label for="fname">Name :</label>
@@ -11,11 +11,6 @@
         <div>
           <label for="lname">Email :</label>
           <input type="text" id="lname" class="form-control" name="email" value="<%= user.email %>"> <br/>
-        </div>
-
-        <div>
-          <label for="email">Password :</label>
-          <input type="password" id="email" class="form-control" name="password" value="<%= user.password %>"> <br/>
         </div>
 
         <div>

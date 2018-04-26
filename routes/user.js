@@ -1,29 +1,11 @@
 const router                     = require('express').Router();
 const { User, Item, Foundation } = require('../models')
 
-router.get('/', (req, res) => {
-  Item
-    .findAll({
-      include: [{
-        model: Foundation
-      }],
-      where: {
-        UserId: req.session.user_id
-      }
-    })
-    .then(items => {
-      res.render('user/index', { items })
-    })
-    .catch(({errors}) => {
-      res.send(errors)
-    })
-})
-
 router.get('/profile', (req, res) => {
   User
     .findById(req.session.user_id)
     .then(user => {
-      res.render('user/profile', { user })
+      res.render('users/profile', { user })
     })
     .catch(({ errors }) => {
       res.send(errors)
@@ -32,19 +14,38 @@ router.get('/profile', (req, res) => {
 
 router.post('/profile', (req, res) => {
   User
-    .findById(req.params.userid)
+    .findById(req.session.user_id)
     .then(user => {
       user
         .update(req.body, {
           where: {
-            id: req.params.id
+            id: req.session.user_id
           }
         })
         .then((profile) => {
-          res.redirect('/users')
+          res.redirect('/user')
         })
     })
     .catch(({ errors }) => {
+      res.send(errors)
+    })
+})
+
+router.get('/items', (req, res) => {
+  Item
+    .findAll({
+      include: [
+        Foundation
+      ],
+      order: [['id', 'ASC']],
+      where: {
+        UserId: req.session.user_id
+      }
+    })
+    .then(items => {
+      res.render('users/index', { items })
+    })
+    .catch(({errors}) => {
       res.send(errors)
     })
 })
@@ -53,7 +54,7 @@ router.get('/items/add', ( req, res)=> {
   Foundation
     .findAll()
     .then( foundations => {
-      res.render('item/add', { foundations })
+      res.render('items/add', { foundations })
     })
     .catch(({ errors })=> {
       res.send(errors)
@@ -67,7 +68,7 @@ router.post('/items/add', (req, res) => {
   Item
     .create(req.body)
     .then((newItem) => {
-      res.redirect('/users')
+      res.redirect('/user/items')
     })
     .catch(({ errors }) => {
       res.send(errors)
@@ -85,7 +86,7 @@ router.get('/items/edit/:id', (req, res) => {
       Foundation
         .findAll()
         .then((foundations) => {
-          res.render('item/edit',{ item, foundations })
+          res.render('items/edit',{ item, foundations })
         })
     })
     .catch(({errors}) => {
@@ -93,21 +94,21 @@ router.get('/items/edit/:id', (req, res) => {
     })
 })
 
-router.post('items/edit/:id', (req, res) => {
+router.post('/items/edit/:id', (req, res) => {
   Item
     .update({
       name        : req.body.name,
       photo       : req.body.photo,
       price       : req.body.price,
       percentage  : req.body.percentage,
-      FoundationId: 2
+      FoundationId: req.body.FoundationId
     }, {
       where: {
         id: req.params.id
       }
     })
     .then(updatedItem => {
-      res.redirect('/users')
+      res.redirect('/user/items')
     })
     .catch(({ errors }) => {
       res.send(errors)

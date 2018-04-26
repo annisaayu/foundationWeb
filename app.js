@@ -3,15 +3,19 @@ const session                 = require('express-session');
 const bodyParser              = require('body-parser');
 const authMiddleware          = require('./middlewares/authMiddleware');
 const registerLoginMiddleware = require('./middlewares/registerLoginMiddleware');
+const userMiddleware          = require('./middlewares/userMiddleware')
 const routeIndex              = require('./routes');
 const routeRegister           = require('./routes/register');
 const routeLogin              = require('./routes/login');
 const routeLogout             = require('./routes/logout');
 const routeUser               = require('./routes/user');
+const routeFoundation         = require('./routes/foundation');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
+
+app.locals.selectedForm = require('./helpers/selectedForm');
 
 app.set('view engine', 'ejs');
 
@@ -33,7 +37,11 @@ app.use('/', authMiddleware);
 
 app.use('/', routeIndex);
 
-app.use('/users', routeUser);
+app.use('/user', userMiddleware);
+
+app.use('/user', routeUser);
+
+app.use('/foundation', routeFoundation);
 
 app.use('/logout', routeLogout);
 
