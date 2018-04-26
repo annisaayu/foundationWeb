@@ -10,10 +10,12 @@ router.get('/', (req, res) => {
           include: [{
             model: Foundation
           }],
-          where: {UserId: 1}
+          where: {
+            UserId: req.session.user_id
+          }
         })
         .then( items => {
-          res.render('users/index', {items, user})
+          res.render('users/index', { items, user })
         })
     })
 
@@ -59,7 +61,11 @@ router.get('/items', (req, res) => {
       include: [
         Foundation
       ],
-      order: [['id', 'ASC']],
+      order: [
+        [
+          'id', 'ASC'
+        ]
+      ],
       where: {
         UserId: req.session.user_id
       }
@@ -93,20 +99,18 @@ router.post('/items/add', (req, res) => {
   req.body.UserId = req.session.user_id;
   req.body.status = 'available';
 
-  // Item
-  //   .create(req.body)
-  //   .then((newItem) => {
-  //     User
-  //       .findById(req.session.user_id)
-  //       .then(user => {
-  //         res.redirect('/user')
-  //       })
-  //   })
-  //   .catch(({ errors }) => {
-  //     res.send(errors)
-  //   })
-
-
+  Item
+    .create(req.body)
+    .then((newItem) => {
+      User
+        .findById(req.session.user_id)
+        .then(user => {
+          res.redirect('/user')
+        })
+    })
+    .catch(({ errors }) => {
+      res.send(errors)
+    })
 })
 
 router.get('/items/edit/:id', (req, res) => {
