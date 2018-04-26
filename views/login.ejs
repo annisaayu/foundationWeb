@@ -15,6 +15,13 @@
   <br>
   <div class="box">
     <h1 class="text-center">Login Form</h1>
+    
+    <% if (typeof errors !== 'undefined') { %>
+        <% errors.forEach(err => { %>
+          <p class="alert alert-danger"><%= err.message %></p>
+        <% }) %>
+    <% } %>
+
     <form action="/login" class="form-group" method="POST">
       <div class="form-group">
         <label for="InputEmail1">Email</label>

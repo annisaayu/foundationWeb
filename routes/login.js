@@ -22,18 +22,19 @@ router.post('/', (req, res) => {
             req.session.user_id = user.id;
             req.session.email   = user.email;
             req.session.level   = 'user';
-            
+
             res.redirect('/user');
           } else {
-            res.redirect('/login')
+            res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });
           }
         } else {
-          res.redirect('/login');
+          res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });
         }
       })
-      .catch(err => {
-        console.log(err)
-      });
+      .catch(({ errors }) => {
+        res.send(errors);
+      })
+
   } else if (req.body.login === 'foundation') {
     Foundation
       .findOne({
@@ -49,8 +50,8 @@ router.post('/', (req, res) => {
             req.session.foundation_id = foundation.id;
             req.session.email         = foundation.email;
             req.session.level         = 'foundation';
-            
-            res.redirect('/');
+
+            res.redirect('/foundation');
           } else {
             res.redirect('/login')
           }
@@ -58,11 +59,11 @@ router.post('/', (req, res) => {
           res.redirect('/login');
         }
       })
-      .catch(err => {
-        console.log(err)
-      });
+      .catch(({ errors }) => {
+        res.render('login', { errors });
+      })
   }
-  
+
 })
 
 module.exports = router;

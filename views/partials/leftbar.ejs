@@ -1,9 +1,18 @@
 <div class="col-md-3">
   <div class="list-group">
-    <a href="/user/profile" class="list-group-item "><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-      Profile
-    </a>
+    <% if (level === 'user'){ %>
+      <a href="/user/profile" class="list-group-item "><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        Profile
+      </a>
+      <a href="user/items" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Items<span class="badge">25</span></a>
+    <% } else { %>
+      <a href="/foundation/profile" class="list-group-item "><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        Profile
+      </a>
+      <a href="/foundation/items" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Items<span class="badge">25</span></a>
+    <% } %>
 
-    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Items<span class="badge">25</span></a>
+
+
   </div>
 </div>

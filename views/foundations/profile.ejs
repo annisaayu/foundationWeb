@@ -1,25 +1,41 @@
-<%- include ../partials/header.ejs%>
+<%- include ../partials/header.ejs %>
+    <section id="main">
+      <div class="container">
+        <div class="row">
 
-    <div class="container">
-      <form action="/foundation/profile" method="POST">
+          <%- include ../partials/leftbar.ejs %>
 
-        <div>
-          <label for="fname">Name :</label>
-          <input type="text" id="fname" class="form-control" name="foundation_name" value="<%= foundation.foundation_name %>"> <br/>
+          <div class="col-md-9">
+          <!--Latest User-->
+            <div class="panel panel-default">
+              <div class="panel-heading" style="background-color:  #095f59; color: white;">
+                <h3 class="panel-title">Profile</h3>
+              </div>
+              <div class="panel-body">
+                <form action="/foundation/profile" method="POST">
+
+                  <div class="form-group col-md-6">
+                    <label for="fname">Name :</label>
+                    <input type="text" id="fname" class="form-control" name="foundation_name" value="<%= foundation.foundation_name %>"> <br/>
+
+                    <label for="lname">Email :</label>
+                    <input type="text" id="lname" class="form-control" name="email" value="<%= foundation.email %>"> <br/>
+
+                    <label for="email">Saldo :</label>
+                    <input type="text" disabled  id="email" class="form-control" name="saldo" value="<%= foundation.saldo %>" > <br/>
+
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                  </div>
+                  <div class="form-group col-md-6">
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div>
-          <label for="lname">Email :</label>
-          <input type="text" id="lname" class="form-control" name="email" value="<%= foundation.email %>"> <br/>
-        </div>
-
-        <div>
-          <label for="email">Saldo :</label>
-          <input type="text" disabled  id="email" class="form-control" name="saldo" value="<%= foundation.saldo %>" > <br/>
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="Submit">
-      </form>
-    </div>
-
-<%- include ../partials/footer.ejs%>
+<%- include ../partials/footer.ejs %>

@@ -19,17 +19,15 @@
                     <th>Action</th>
                   </tr>
                   <% items.forEach((item, i) => { %>
-                    <% if(item.status === 'available') { %>
                       <tr>
                         <td><%= i+1 %></td>
                         <td> <%= item.name %> </td>
                         <td> <%= item.price %> </td>
                         <td> <%= item.percentage %> %</td>
                         <td>
-                          <a href="/foundation/items/buy/<%= item.itemCode %>">Checkout</a>
+                          <a href="#">View detail</a>
                         </td>
                       </tr>
-                    <% } %>
                   <% }) %>
                 </table>
               </div>
