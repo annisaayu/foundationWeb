@@ -4,6 +4,7 @@ const bodyParser              = require('body-parser');
 const authMiddleware          = require('./middlewares/authMiddleware');
 const registerLoginMiddleware = require('./middlewares/registerLoginMiddleware');
 const userMiddleware          = require('./middlewares/userMiddleware')
+const foundationMiddleware    = require('./middlewares/foundationMiddleware')
 const routeIndex              = require('./routes');
 const routeRegister           = require('./routes/register');
 const routeLogin              = require('./routes/login');
@@ -37,9 +38,11 @@ app.use('/', authMiddleware);
 
 app.use('/', routeIndex);
 
-// app.use('/user', userMiddleware);
+app.use('/user', userMiddleware);
 
 app.use('/user', routeUser);
+
+app.use('/user', foundationMiddleware);
 
 app.use('/foundation', routeFoundation);
 

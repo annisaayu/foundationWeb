@@ -56,11 +56,7 @@ router.post('/', (req, res) => {
             res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });
           }
         } else {
-<<<<<<< HEAD
           res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });
-=======
-          res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });;
->>>>>>> 1f2d3dcab5d1000cea455fa8a89720759ba529c4
         }
       })
       .catch(({ errors }) => {
