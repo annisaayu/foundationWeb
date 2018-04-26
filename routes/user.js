@@ -36,7 +36,6 @@ router.get('/profile', (req, res) => {
 })
 
 router.post('/profile', (req, res) => {
-  // res.send(req.body)
   User
     .findById(req.session.user_id)
     .then(user => {
@@ -71,7 +70,15 @@ router.get('/items', (req, res) => {
       }
     })
     .then(items => {
-      res.render('users/index', { items })
+      User
+        .findOne({
+          where: {
+            id: req.session.user_id
+          }
+        })
+        .then(user => {
+          res.render('users/index', { items, user })
+        })
     })
     .catch(({errors}) => {
       res.send(errors)
@@ -79,23 +86,25 @@ router.get('/items', (req, res) => {
 })
 
 router.get('/items/add', ( req, res)=> {
-  User
-    .findById(req.session.user_id)
-    .then(user => {
-      Foundation
-        .findAll()
-        .then( foundations => {
+  Foundation
+    .findAll()
+    .then( foundations => {
+      User
+        .findOne({
+          where: {
+            id: req.session.user_id
+          }
+        })
+        .then(user => {
           res.render('items/add', { foundations, user })
         })
     })
-    .catch(({ errors }) => {
+    .catch(({ errors })=> {
       res.send(errors)
     })
-
 })
 
 router.post('/items/add', (req, res) => {
-
   req.body.UserId = req.session.user_id;
   req.body.status = 'available';
 
@@ -124,7 +133,15 @@ router.get('/items/edit/:id', (req, res) => {
       Foundation
         .findAll()
         .then((foundations) => {
-          res.render('items/edit',{ item, foundations })
+          User
+            .findOne({
+              where: {
+                id: req.session.user_id
+              }
+            })
+            .then(user => {
+              res.render('items/edit',{ item, foundations, user })
+            })
         })
     })
     .catch(({errors}) => {

@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
             req.session.email   = user.email;
             req.session.level   = 'user';
             
-            res.redirect('/');
+            res.redirect('/user');
           } else {
             res.redirect('/login')
           }
