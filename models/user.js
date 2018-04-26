@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Foundation, {through: models.Item})
   };
   
-  User.hook('beforeSave', (user, options) => {
+  User.hook('beforeCreate', (user, options) => {
     let saltRounds = 10;
     let salt       = bcrypt.genSaltSync(saltRounds);
     let hash       = bcrypt.hashSync(user.password, salt);

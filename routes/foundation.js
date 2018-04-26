@@ -34,30 +34,47 @@ router.post('/profile', (req, res) => {
 router.get('/items', (req, res) => {
   Item
     .findAll({
-      include: [{
-        model: Foundation
-      }],
       where: {
-        UserId: req.session.user_id
+        FoundationId: req.session.foundation_id
       }
     })
     .then(items => {
-      res.render('users/index', { items })
+      res.render('foundations/index', { items })
     })
     .catch(({errors}) => {
       res.send(errors)
     })
 })
 
-router.get('/items/add', ( req, res)=> {
-  Foundation
-    .findAll()
-    .then( foundations => {
-      res.render('items/add', { foundations })
+router.get('/items/buy/:id', (req, res) => {
+  Item
+    .findOne({
+      where:{
+        itemCode: req.params.id
+      }
     })
-    .catch(({ errors })=> {
-      res.send(errors)
+    .then(item => {
+      res.render('items/buy', { item });
     })
+    .catch(err => {
+      res.send(err);
+    })
+})
+
+router.post('/items/buy/:id', (req, res) => {
+  Item
+    .update({
+      status: 'sold'
+    }, {
+      where: {
+        itemCode: req.params.id
+      },
+      individualHooks: true
+    })
+    .then(updateItem => {
+      res.redirect('/foundation/items')
+    })
+    .catch()
 })
 
 module.exports = router;

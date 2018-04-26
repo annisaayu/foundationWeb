@@ -37,7 +37,7 @@ app.use('/', authMiddleware);
 
 app.use('/', routeIndex);
 
-app.use('/user', userMiddleware);
+// app.use('/user', userMiddleware);
 
 app.use('/user', routeUser);
 
