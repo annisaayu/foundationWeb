@@ -9,7 +9,10 @@ router.get('/', (req, res) => {
       }
     })
     .then( items => {
-      // res.send(items)
+      items.forEach(item => {
+        item.price = Item.toRupiah(item.price);
+      });
+
       res.render('foundations/index', { items, level: req.session.level })
     })
     .catch(({errors}) => {
@@ -18,7 +21,6 @@ router.get('/', (req, res) => {
 })
 
 router.get('/profile', (req, res) => {
-
   Foundation
     .findById(req.session.foundation_id)
     .then( foundation => {
@@ -52,12 +54,24 @@ router.post('/profile', (req, res) => {
 router.get('/items', (req, res) => {
   Item
     .findAll({
+      include: [
+        User
+      ],
+      order: [
+        [
+          'id', 'ASC'
+        ]
+      ],
       where: {
         FoundationId: req.session.foundation_id,
         status: 'sold'
       }
     })
     .then( items => {
+      items.forEach(item => {
+        item.price = Item.toRupiah((item.price * item.percentage) / 100);
+      });
+
       res.render('foundations/list-item', { items, level: req.session.level })
     })
     .catch(({errors}) => {

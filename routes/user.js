@@ -4,14 +4,23 @@ const { User, Item, Foundation } = require('../models')
 router.get('/', (req, res) => {
   Item
     .findAll({
-      include: [{
-        model: Foundation
-      }],
+      include: [
+        Foundation
+      ],
+      order: [
+        [
+          'id', 'ASC'
+        ]
+      ],
       where: {
         UserId: req.session.user_id
       }
     })
     .then( items => {
+      items.forEach(item => {
+        item.price = Item.toRupiah(item.price);
+      });
+
       res.render('users/index', { items, level: req.session.level  })
     })
     .catch(({errors}) => {
@@ -64,7 +73,38 @@ router.get('/items', (req, res) => {
       }
     })
     .then(items => {
+      items.forEach(item => {
+        item.price = Item.toRupiah(item.price);
+      });
+
       res.render('users/index', { level: req.session.level, items })
+    })
+    .catch(({errors}) => {
+      res.send(errors)
+    })
+})
+
+router.get('/items/sold', (req, res) => {
+  Item
+    .findAll({
+      include: [
+        Foundation
+      ],
+      order: [
+        [
+          'id', 'ASC'
+        ]
+      ],
+      where: {
+        UserId: req.session.user_id
+      }
+    })
+    .then(items => {
+      items.forEach(item => {
+        item.price = Item.toRupiah(item.price);
+      });
+
+      res.render('users/sold-item', { level: req.session.level, items })
     })
     .catch(({errors}) => {
       res.send(errors)

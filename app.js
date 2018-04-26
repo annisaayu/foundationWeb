@@ -36,15 +36,17 @@ app.use('/login', routeLogin);
 
 app.use('/', authMiddleware);
 
-app.use('/', routeIndex);
-
 app.use('/user', userMiddleware);
 
 app.use('/user', routeUser);
 
-app.use('/user', foundationMiddleware);
+app.use('/', routeIndex);
+
+app.use('/foundation', foundationMiddleware);
 
 app.use('/foundation', routeFoundation);
+
+app.use('/', routeIndex);
 
 app.use('/logout', routeLogout);
 
