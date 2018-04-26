@@ -1,27 +1,6 @@
 const router                     = require('express').Router();
 const { User, Item, Foundation } = require('../models')
 
-router.get('/', (req, res) => {
-  User
-    .findById(req.session.user_id)
-    .then( user => {
-      Item
-        .findAll({
-          include: [{
-            model: Foundation
-          }],
-          where: {UserId: 1}
-        })
-        .then( items => {
-          res.render('users/index', {items, user})
-        })
-    })
-
-    .catch(({errors}) => {
-      res.send(errors)
-    })
-})
-
 router.get('/profile', (req, res) => {
   User
     .findById(req.session.user_id)
@@ -34,7 +13,6 @@ router.get('/profile', (req, res) => {
 })
 
 router.post('/profile', (req, res) => {
-  // res.send(req.body)
   User
     .findById(req.session.user_id)
     .then(user => {
@@ -73,40 +51,28 @@ router.get('/items', (req, res) => {
 })
 
 router.get('/items/add', ( req, res)=> {
-  User
-    .findById(req.session.user_id)
-    .then(user => {
-      Foundation
-        .findAll()
-        .then( foundations => {
-          res.render('items/add', { foundations, user })
-        })
+  Foundation
+    .findAll()
+    .then( foundations => {
+      res.render('items/add', { foundations })
+    })
+    .catch(({ errors })=> {
+      res.send(errors)
+    })
+})
+
+router.post('/items/add', (req, res) => {
+  req.body.UserId = req.session.user_id;
+  req.body.status = 'available';
+
+  Item
+    .create(req.body)
+    .then((newItem) => {
+      res.redirect('/user/items')
     })
     .catch(({ errors }) => {
       res.send(errors)
     })
-
-})
-
-router.post('/items/add', (req, res) => {
-
-  req.body.UserId = req.session.user_id;
-  req.body.status = 'available';
-
-  // Item
-  //   .create(req.body)
-  //   .then((newItem) => {
-  //     User
-  //       .findById(req.session.user_id)
-  //       .then(user => {
-  //         res.redirect('/user')
-  //       })
-  //   })
-  //   .catch(({ errors }) => {
-  //     res.send(errors)
-  //   })
-
-
 })
 
 router.get('/items/edit/:id', (req, res) => {
