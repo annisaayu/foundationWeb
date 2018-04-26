@@ -1,76 +1,153 @@
-'use strict';
+const router                     = require('express').Router();
+const { User, Item, Foundation } = require('../models')
 
-const bcrypt    = require('bcrypt');
-const Sequelize = require('sequelize');
-const Op        = Sequelize.Op;
+router.get('/', (req, res) => {
+  User
+    .findById(req.session.user_id)
+    .then( user => {
+      Item
+        .findAll({
+          include: [{
+            model: Foundation
+          }],
+          where: {UserId: 1}
+        })
+        .then( items => {
+          res.render('users/index', {items, user})
+        })
+    })
 
-module.exports = (sequelize, DataTypes) => {
-  var User = sequelize.define('User', {
-    name: DataTypes.STRING,
-    email: {
-      type: DataTypes.STRING,
-      validate: {
-        isEmail: {
-          args: true,
-          msg: 'Email format is incorrect'
-        },
-        isUnique(value, next) {
-          // Condition for Add User
-          let condition = {
-            email: value
+    .catch(({errors}) => {
+      res.send(errors)
+    })
+})
+
+router.get('/profile', (req, res) => {
+  User
+    .findById(req.session.user_id)
+    .then(user => {
+      res.render('users/profile', { user })
+    })
+    .catch(({ errors }) => {
+      res.send(errors)
+    })
+})
+
+router.post('/profile', (req, res) => {
+  // res.send(req.body)
+  User
+    .findById(req.session.user_id)
+    .then(user => {
+      user
+        .update(req.body, {
+          where: {
+            id: req.session.user_id
           }
-          // Condition for Edit User
-          if (this.id != null) {
-            condition = {
-              email: value,
-              id: {
-                [Op.ne]: this.id
-              }
-            }
-          }
+        })
+        .then((profile) => {
+          res.redirect('/user')
+        })
+    })
+    .catch(({ errors }) => {
+      res.send(errors)
+    })
+})
 
-          sequelize.models.User.findOne({
-              where: condition
-            })
-            .then(emailInput => {
-              if (emailInput) {
-                next('Email is already exist');
-              } else {
-                next()
-              }
-            })
-            .catch(err => {
-              next(err);
-            })
-        }
+router.get('/items', (req, res) => {
+  Item
+    .findAll({
+      include: [
+        Foundation
+      ],
+      order: [['id', 'ASC']],
+      where: {
+        UserId: req.session.user_id
       }
-    },
-    password: {
-      type: DataTypes.STRING,
-      validate: {
-        min: {
-          args: 8,
-          msg: 'Minimum password is 8 character'
-        }
+    })
+    .then(items => {
+      res.render('users/index', { items })
+    })
+    .catch(({errors}) => {
+      res.send(errors)
+    })
+})
+
+router.get('/items/add', ( req, res)=> {
+  User
+    .findById(req.session.user_id)
+    .then(user => {
+      Foundation
+        .findAll()
+        .then( foundations => {
+          res.render('items/add', { foundations, user })
+        })
+    })
+    .catch(({ errors }) => {
+      res.send(errors)
+    })
+
+})
+
+router.post('/items/add', (req, res) => {
+
+  req.body.UserId = req.session.user_id;
+  req.body.status = 'available';
+
+  // Item
+  //   .create(req.body)
+  //   .then((newItem) => {
+  //     User
+  //       .findById(req.session.user_id)
+  //       .then(user => {
+  //         res.redirect('/user')
+  //       })
+  //   })
+  //   .catch(({ errors }) => {
+  //     res.send(errors)
+  //   })
+
+
+})
+
+router.get('/items/edit/:id', (req, res) => {
+  Item
+    .findOne({
+      where: {
+        itemCode: req.params.id
       }
-    },
-    saldo: DataTypes.INTEGER
-  }, {});
+    })
+    .then(item => {
+      Foundation
+        .findAll()
+        .then((foundations) => {
+          res.render('items/edit',{ item, foundations })
+        })
+    })
+    .catch(({errors}) => {
+      res.send(errors)
+    })
+})
+
+router.post('/items/edit/:id', (req, res) => {
+  Item
+    .update({
+      name        : req.body.name,
+      photo       : req.body.photo,
+      price       : req.body.price,
+      percentage  : req.body.percentage,
+      FoundationId: req.body.FoundationId
+    }, {
+      where: {
+        id: req.params.id
+      }
+    })
+    .then(updatedItem => {
+      res.redirect('/user/items')
+    })
+    .catch(({ errors }) => {
+      res.send(errors)
+    })
+})
 
 
-  User.associate = function(models) {
-    // associations can be defined here
-    User.hasMany(models.Item)
-    User.belongsToMany(models.Foundation, {through: models.Item})
-  };
-
-  User.hook('beforeCreate', (user, options) => {
-    let saltRounds = 10;
-    let salt       = bcrypt.genSaltSync(saltRounds);
-    let hash       = bcrypt.hashSync(user.password, salt);
-
-    user.password = hash;
-  });
-
-  return User;
-};
+module.exports = router;

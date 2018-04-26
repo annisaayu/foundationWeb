@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Item)
     User.belongsToMany(models.Foundation, {through: models.Item})
   };
-  
+
   User.hook('beforeCreate', (user, options) => {
     let saltRounds = 10;
     let salt       = bcrypt.genSaltSync(saltRounds);
