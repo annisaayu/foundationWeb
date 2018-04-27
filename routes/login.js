@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
             req.session.name    = user.name
             req.session.level   = 'user';
 
-            res.redirect('/user');
+            res.redirect('/');
           } else {
             res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });
           }
@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
             req.session.name          = foundation.foundation_name
             req.session.level         = 'foundation';
 
-            res.redirect('/foundation');
+            res.redirect('/');
           } else {
             res.render('login', { errors: [{message: 'Incorrect Email / Password Combination'}] });
           }
