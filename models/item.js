@@ -46,9 +46,5 @@ module.exports = (sequelize, DataTypes) => {
         })
     }
   })
-
-  Item.toRupiah = function (money) {
-    return 'Rp. ' + money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
   return Item;
 };

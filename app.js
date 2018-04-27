@@ -18,6 +18,8 @@ app.use(bodyParser.json());
 
 app.locals.selectedForm = require('./helpers/selectedForm');
 
+app.locals.toRupiah = require('./helpers/toRupiah');
+
 app.set('view engine', 'ejs');
 
 app.use(session({

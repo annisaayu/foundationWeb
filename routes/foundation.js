@@ -9,10 +9,6 @@ router.get('/', (req, res) => {
       }
     })
     .then( items => {
-      items.forEach(item => {
-        item.price = Item.toRupiah(item.price);
-      });
-
       res.render('foundations/index', { items, level: req.session.level })
     })
     .catch(({errors}) => {
@@ -72,10 +68,6 @@ router.get('/items', (req, res) => {
       }
     })
     .then( items => {
-      items.forEach(item => {
-        item.price = Item.toRupiah((item.price * item.percentage) / 100);
-      });
-
       res.render('foundations/list-item', { items, level: req.session.level })
     })
     .catch(({errors}) => {

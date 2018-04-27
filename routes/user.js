@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
       ],
       order: [
         [
-          'id', 'ASC'
+          'updatedAt', 'DESC'
         ]
       ],
       where: {
@@ -17,10 +17,6 @@ router.get('/', (req, res) => {
       }
     })
     .then( items => {
-      items.forEach(item => {
-        item.price = Item.toRupiah(item.price);
-      });
-
       res.render('users/index', { items, level: req.session.level  })
     })
     .catch(({errors}) => {
@@ -77,10 +73,6 @@ router.get('/items', (req, res) => {
       }
     })
     .then(items => {
-      items.forEach(item => {
-        item.price = Item.toRupiah(item.price);
-      });
-
       res.render('users/index', { level: req.session.level, items })
     })
     .catch(({errors}) => {
@@ -104,10 +96,6 @@ router.get('/items/sold', (req, res) => {
       }
     })
     .then(items => {
-      items.forEach(item => {
-        item.price = Item.toRupiah(item.price);
-      });
-
       res.render('users/sold-item', { level: req.session.level, items })
     })
     .catch(({errors}) => {

@@ -23,7 +23,7 @@
                       <tr>
                         <td><%= i+1 %></td>
                         <td> <%= item.name %> </td>
-                        <td> <%= item.price %> </td>
+                        <td> <%= toRupiah(item.price) %> </td>
                         <td> <%= item.percentage %> %</td>
                         <td>
                           <a href="/foundation/items/buy/<%= item.itemCode %>">Checkout</a>
