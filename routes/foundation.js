@@ -34,19 +34,23 @@ router.get('/profile', (req, res) => {
 
 router.post('/profile', (req, res) => {
   Foundation
-    .update(req.body, {
-      where: {
-        id: req.session.foundation_id
-      }
-    })
-    .then((profile) => {
-      res.redirect('/foundation')
-    })
-    .catch(({ errors }) => {
-      Foundation
-        .findById(req.session.foundation_id)
-        .then( foundation => {
-          res.render('foundations/profile', { foundation, level: req.session.level, errors })
+    .findById(req.session.foundation_id)
+    .then(foundation => {
+      foundation
+        .update(req.body, {
+          where: {
+            id: req.session.foundation_id
+          }
+        })
+        .then((profile) => {
+          res.redirect('/foundation')
+        })
+        .catch(({ errors }) => {
+          Foundation
+            .findById(req.session.foundation_id)
+            .then( foundation => {
+              res.render('foundations/profile', { foundation, level: req.session.level, errors })
+            })
         })
     })
 })

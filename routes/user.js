@@ -40,19 +40,23 @@ router.get('/profile', (req, res) => {
 
 router.post('/profile', (req, res) => {
   User
-    .update(req.body, {
-      where: {
-        id: req.session.user_id
-      }
-    })
-    .then((user) => {
-      res.redirect('/user')
-    })
-    .catch(({ errors }) => {
-      User
-        .findById(req.session.user_id)
-        .then(user => {
-          res.render('users/profile', {user, level: req.session.level, errors })
+    .findById(req.session.user_id)
+    .then(user => {
+      user
+        .update(req.body, {
+          where: {
+            id: req.session.user_id
+          }
+        })
+        .then((user) => {
+          res.redirect('/user')
+        })
+        .catch(({ errors }) => {
+          User
+            .findById(req.session.user_id)
+            .then(user => {
+              res.render('users/profile', {user, level: req.session.level, errors })
+            })
         })
     })
 })
