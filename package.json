@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +19,13 @@
   "dependencies": {
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
+    "cli": "^1.0.1",
     "ejs": "^2.5.9",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "pg": "^7.4.1",
-    "sequelize": "^4.37.6"
+    "sequelize": "^4.37.6",
+    "sequelize-cli": "^4.0.0"
   },
   "description": ""
 }
