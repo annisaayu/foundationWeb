@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <%- include('./partials/style.ejs') %>
+</head>
+
+<body>
+
+  <%- include('./partials/navbar.ejs') %>
+  <br>
+  <div class="box">
+    <h1 class="text-center">Login Form</h1>
+
+    <%- include('./partials/error-message.ejs') %>
+
+    <form action="/login" class="form-group" method="POST">
+      <div class="form-group">
+        <label for="InputEmail1">Email</label>
+        <input type="text" class="form-control" name="email" value="" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input type="password" class="form-control" name="password" value="" placeholder="Enter password">
+      </div>
+      <div class="form-group">
+        <select name="login" class="form-control">
+          <option value="user">User</option>
+          <option value="foundation">Foundation</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-outline-success">Login</button>
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<%- include ../partials/header.ejs %>
+    <section id="main">
+      <div class="container">
+        <div class="row">
+          <%- include ../partials/leftbar.ejs %>
+
+          <div class="col-md-9">
+            <div class="panel panel-default">
+              <div class="panel-heading" style="background-color:  #095f59; color: white;">
+                <h3 class="panel-title">Edit Item</h3>
+              </div>
+              <div class="panel-body">
+                <form action="/user/items/edit/<%= item.itemCode %> %>" method="POST">
+                  <div class="form-group col-md-6">
+                    <div class="form-group">
+                       <label >Item Name :</label>
+                       <input type="text" class="form-control" name="name" value="<%= item.name %>" > <br/>
+                     </div>
+
+                     <div class="form-group">
+                       <label>Price :</label>
+                       <input type="number" class="form-control" name="price" value="<%= item.price %>"> <br/>
+                     </div>
+
+                     <div class="form-group">
+                       <label>Percentage (%) :</label>
+                       <input type="number" class="form-control" name="percentage" value="<%= item.percentage %>"> <br/>
+                     </div>
+
+                     <div class="form-group">
+                       <label>Item Photo : </label><br />
+                       <input type="file"  name="photo" value="<%= item.photo %>"> <br/>
+                     </div>
+
+                     <div class="form-group">
+                       <label>Foundations :</label><br />
+                       <select name="FoundationId" class="custom-select">
+                         <option value='' > --- select Foundation --- </option>
+                         <% foundations.forEach((foundation) => { %>
+                            <option value= '<%= foundation.id %>' <%= selectedForm(foundation, item.FoundationId) %> > <%= foundation.foundation_name %> </option>
+                         <% }) %>
+                       </select>
+                     </div>
+
+                     <input type="submit" class="btn btn-primary" value="Save">
+                  </div>
+
+                </form>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<%- include ../partials/footer.ejs %>

@@ -1,0 +1,18 @@
+<div class="col-md-3">
+  <div class="list-group">
+    <% if (level === 'user'){ %>
+      <a href="/user/profile" class="list-group-item "><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        Profile
+      </a>
+      <a href="/user/items" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Available Items<span class="badge"></span></a>
+      <a href="/user/items/sold" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Sold Items<span class="badge"></span></a>
+      <a href="/user/items/add" class="list-group-item"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Items<span class="badge"></span></a>
+    <% } else if (level === 'foundation') { %>
+      <a href="/foundation/profile" class="list-group-item "><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        Profile
+      </a>
+      <a href="/foundation" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Available Items<span class="badge"></span></a>
+      <a href="/foundation/items" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Items Bought<span class="badge"></span></a>
+    <% } %>
+  </div>
+</div>
