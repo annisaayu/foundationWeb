@@ -16,9 +16,9 @@
     "url": "https://github.com/annisaayu/foundationWeb/issues"
   },
   "homepage": "https://github.com/annisaayu/foundationWeb#readme",
+  "body-parser": "^1.18.2",
   "dependencies": {
     "bcrypt": "^2.0.1",
-    "body-parser": "^1.18.2",
     "cli": "^1.0.1",
     "ejs": "^2.5.9",
     "express": "^4.16.3",
