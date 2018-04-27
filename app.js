@@ -1,6 +1,7 @@
 const app                     = require('express')();
 const session                 = require('express-session');
 const bodyParser              = require('body-parser');
+const port                    = process.env.PORT || 3000;
 const authMiddleware          = require('./middlewares/authMiddleware');
 const registerLoginMiddleware = require('./middlewares/registerLoginMiddleware');
 const userMiddleware          = require('./middlewares/userMiddleware')
@@ -52,4 +53,4 @@ app.use('/', routeIndex);
 
 app.use('/logout', routeLogout);
 
-app.listen(3000, console.log('Listen on port 3000'))
+app.listen(port, console.log('Listen on port 3000'));
